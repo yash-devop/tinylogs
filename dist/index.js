@@ -1,48 +1,53 @@
 import {
-  Tinylogs
-} from "./chunk-V6WTEF42.js";
-import "./chunk-LTWKJRQY.js";
-import "./chunk-MBV5ZDXE.js";
+  getUser
+} from "./chunk-N7VZTWQO.js";
+import {
+  tinylogs
+} from "./chunk-CEK57UGS.js";
+import {
+  useTinyLogs
+} from "./chunk-QGSLO6VO.js";
+import "./chunk-BLJ74T7Z.js";
+import "./chunk-I2R2DFQS.js";
+import "./chunk-L55LDJIM.js";
+import "./chunk-QKXGJF2V.js";
+import "./chunk-VDWADJO2.js";
+import "./chunk-F3GOZR6K.js";
 
 // src/index.ts
 import express from "express";
 var app = express();
 app.use(express.json());
-app.get("/", (req, res) => {
-  const logger = Tinylogs();
+app.use(tinylogs());
+app.get("/", async (req, res) => {
+  const logger = useTinyLogs();
+  req.log.set({
+    message: "Message directly from request object."
+  });
   logger.set({
-    name: "yash",
-    age: 23,
+    name: "Yash",
+    role: "Fullstack Engineer",
     address: {
       state: "maharashtra",
       city: "mumbai",
-      pincode: 400104,
-      building: {
-        wing: "b",
-        room: 402,
-        owner: {
-          name: "paaji",
-          age: 40
-        }
-      },
-      2: {
-        vote: true
+      pincode: 401020,
+      street: {
+        direction: "EAST",
+        availableOnMaps: true,
+        lat: 0,
+        long: 0
       }
     }
   });
   logger.set({
-    name: "yash",
-    age: 23,
+    name: "John summit",
+    role: "Producer",
     address: {
-      state: "maharashtra",
-      city: "mumbai",
-      pincode: 410206
+      country: "New York"
     }
   });
-  logger.set("2nd");
-  logger.set("3rd");
-  logger.set("4th");
-  logger.warn("dsa");
+  logger.warn("Warning log");
+  await getUser();
   return res.json("working");
 });
 app.listen(8e3);

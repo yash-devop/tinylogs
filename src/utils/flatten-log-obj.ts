@@ -1,9 +1,7 @@
-export const flattenLogObj = (data: any): string[] => {
-  const result: string[] = [];
+import { NormalizeInputMessage } from "@/types/types";
 
-  if (typeof data === "string") {
-    return [data.toString()];
-  }
+export const normalizeInputMessage = (data: any): NormalizeInputMessage[] => {
+  const result: NormalizeInputMessage[] = [];
 
   const formatNested = (obj: any): string => {
     let str = "";
@@ -22,9 +20,17 @@ export const flattenLogObj = (data: any): string[] => {
   Object.entries(data).forEach(([key, value]) => {
     if (value !== null && typeof value === "object" && !Array.isArray(value)) {
       const nestedStr = formatNested(value);
-      result.push(`${key}: ${nestedStr}`);
+
+      result.push({
+        key,
+        nestedStr,
+      });
     } else {
-      result.push(`${key}: ${value}`);
+      const val = value as string;
+      result.push({
+        key,
+        nestedStr: val,
+      });
     }
   });
 

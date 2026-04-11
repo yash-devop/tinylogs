@@ -1,47 +1,45 @@
 import express, { Request, Response } from "express";
-import { Tinylogs } from "./core/tinylogs";
+import { useTinyLogs } from "./logger/logger";
+import { tinylogs } from "./middleware/express";
+import { getUser } from "./test";
 
 const app = express();
 
 app.use(express.json());
+app.use(tinylogs());
 
-app.get("/", (req: Request, res: Response) => {
-  const logger = Tinylogs();
+app.get("/", async (req: Request, res: Response) => {
+  const logger = useTinyLogs();
+
+  req.log.set({
+    message: "Message directly from request object.",
+  });
   logger.set({
-    name: "yash",
-    age: 23,
+    name: "Yash",
+    role: "Fullstack Engineer",
     address: {
       state: "maharashtra",
       city: "mumbai",
-      pincode: 400104,
-      building: {
-        wing: "b",
-        room: 402,
-        owner: {
-          name: "paaji",
-          age: 40,
-        },
-      },
-      2: {
-        vote: true,
+      pincode: 401020,
+      street: {
+        direction: "EAST",
+        availableOnMaps: true,
+        lat: 0,
+        long: 0,
       },
     },
   });
   logger.set({
-    name: "yash",
-    age: 23,
+    name: "John summit",
+    role: "Producer",
     address: {
-      state: "maharashtra",
-      city: "mumbai",
-      pincode: 410206,
+      country: "New York",
     },
   });
-  logger.set("2nd");
-  logger.set("3rd");
-  logger.set("4th");
-  logger.warn("dsa");
+  logger.warn("Warning log");
+
+  await getUser();
 
   return res.json("working");
 });
-
 app.listen(8000);
