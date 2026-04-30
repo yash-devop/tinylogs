@@ -6,7 +6,7 @@ export type TinylogsType = {
   set: (message: LogParameter) => void;
   // info: () => void;
   warn: (message: string) => void;
-  // error: () => void;
+  error: (message: string) => void;
 };
 
 export type Type = "info" | "warn" | "error";
@@ -17,9 +17,19 @@ export type Store = {
   method?: Method;
   route: string;
   statusCode: string | number;
+  startTime: number;
+  errors?: TinyLogErrorOptions;
 };
 
 export type NormalizeInputMessage = {
   key: string;
   nestedStr: string;
+};
+
+export type TinyLogErrorOptions = {
+  message: string;
+  status?: number;
+  why?: string;
+  fix?: string;
+  link?: string;
 };

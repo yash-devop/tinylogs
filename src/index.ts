@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
+import { TinyLogError } from "./logger/create-error";
 import { useTinyLogs } from "./logger/logger";
 import { tinylogs } from "./middleware/express";
 import { getUser } from "./test";
+import { errorMiddleware } from "./middleware/error-middleware";
 
 const app = express();
 
@@ -11,9 +13,14 @@ app.use(tinylogs());
 app.get("/", async (req: Request, res: Response) => {
   const logger = useTinyLogs();
 
+  res.on("finish", () => {
+    console.log("[FINISHED]");
+  });
+  console.log("start");
   req.log.set({
     message: "Message directly from request object.",
   });
+  console.log("mid");
   logger.set({
     name: "Yash",
     role: "Fullstack Engineer",
@@ -29,6 +36,7 @@ app.get("/", async (req: Request, res: Response) => {
       },
     },
   });
+  console.log("end");
   logger.set({
     name: "John summit",
     role: "Producer",
@@ -36,10 +44,20 @@ app.get("/", async (req: Request, res: Response) => {
       country: "New York",
     },
   });
+  console.log("end2");
+
   logger.warn("Warning log");
 
   await getUser();
+  throw new TinyLogError({
+    message: "Payment Failed",
+    status: 503,
+    fix: "retry the same method with different pay id",
+    why: "because you used development id",
+  });
 
-  return res.json("working");
+  // return res.json("working");
 });
+
+app.use(errorMiddleware);
 app.listen(8000);

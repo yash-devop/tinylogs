@@ -18,7 +18,7 @@ export const generateMetaData = (requestId: string, type: Type = "info") => {
     return;
   }
 
-  const { method, route } = store;
+  const { method, route, startTime } = store;
   if (RequestMap.has(requestId)) {
     return;
   }
@@ -34,13 +34,14 @@ export const generateMetaData = (requestId: string, type: Type = "info") => {
   });
 
   const formattedDate = intl.format(date);
+  const responseTime = performance.now() - startTime;
   console.log(
     styleText(["gray"], formattedDate),
     styleText([LOG_STYLE[type]], `[${LEVELS[type]}]`),
     method,
     route,
     "in",
-    `12 ms`,
+    `${Math.round(responseTime)} ms`,
   );
   console.log(
     styleText(["gray"], "├─ ") +

@@ -25,5 +25,15 @@ export const useTinyLogs = (): TinylogsType => {
     generateMetaData(requestId, "warn");
     buildLogString(message, "warn");
   };
-  return { set, warn };
+
+  const error = () => {
+    if (!store) {
+      console.warn("no store context");
+      return;
+    }
+    const { requestId, errors } = store;
+    generateMetaData(requestId, "error");
+    buildLogString(JSON.stringify(errors), "error");
+  };
+  return { set, warn, error };
 };

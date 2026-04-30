@@ -14,13 +14,15 @@ export const tinylogs = () => {
 
     Storage.run(store, () => {
       const loggerMethods = useTinyLogs();
+      const startTime = performance.now();
       setContext({
         method: req.method as Method,
         route: req.path,
         statusCode: req.statusCode ?? "404",
         requestId: store.requestId,
+        startTime,
       });
-      generateMetaData(store.requestId, "info");
+      generateMetaData(store.requestId, "error");
 
       req.log = { ...loggerMethods };
       next();
