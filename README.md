@@ -1,159 +1,202 @@
-# Turborepo starter
+# TinyLogs
 
-This Turborepo starter is maintained by the Turborepo core team.
+Minimal request-scoped logging SDK for Node.js and Express.
 
-## Using this example
+TinyLogs helps you create structured, grouped, colorful logs with request tracking using `AsyncLocalStorage`.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
+# Features
+
+* Request-scoped logging
+* Express middleware support
+* Async context tracking
+* Structured logs
+* Colored CLI output
+* Tiny bundle size
+* TypeScript support
+* ESM + CommonJS support
+* Custom error handling
+
+---
+
+# Installation
+
+```bash
+npm i @yash-devop/tinylogs
 ```
 
-## What's inside?
+Peer dependency:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@tinylogs/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@tinylogs/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@tinylogs/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+npm i express
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+# Quick Start
+
+## Setup middleware
+
+```ts
+import express from "express";
+import { tinylogs } from "@yash-devop/tinylogs";
+
+const app = express();
+
+app.use(express.json());
+app.use(tinylogs());
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Logging inside routes
 
-```sh
-turbo build --filter=docs
+```ts
+import { useTinyLogs } from "@yash-devop/tinylogs";
+
+app.get("/", async (req, res) => {
+  const logger = useTinyLogs();
+
+  logger.set({
+    user: "Yash",
+    role: "Fullstack Engineer",
+  });
+
+  logger.warn("Payment service latency detected");
+
+  res.json({ success: true });
+});
 ```
 
-Without global `turbo`:
+---
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+# Example Output
+
+```bash
+April 26 at 11:14:58 PM [INFO] GET / in 56 ms
+├─ requestId: 63cb2b9d-3b1d-46d4-b2e7-8e3f4c9c6e13
+├─ user: Yash
+├─ role: Fullstack Engineer
+├─ Payment service latency detected
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+# Error Logging
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+TinyLogs includes a built-in custom error class.
 
-```sh
-cd my-turborepo
-turbo dev
+```ts
+import { TinyLogError } from "@yash-devop/tinylogs";
+
+throw new TinyLogError({
+  message: "Payment Failed",
+  status: 503,
+  why: "Invalid payment id",
+  fix: "Retry with valid payment credentials",
+});
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
+# Error Middleware
+
+```ts
+import { errorMiddleware } from "@yash-devop/tinylogs";
+
+app.use(errorMiddleware);
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+# API
 
-```sh
-turbo dev --filter=web
+## `tinylogs()`
+
+Express middleware that initializes request-scoped logging.
+
+---
+
+## `useTinyLogs()`
+
+Returns logger methods:
+
+```ts
+const logger = useTinyLogs();
 ```
 
-Without global `turbo`:
+### Methods
 
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+#### `logger.set()`
+
+```ts
+logger.set({
+  user: "Yash",
+});
 ```
 
-### Remote Caching
+#### `logger.warn()`
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+```ts
+logger.warn("Something looks suspicious");
 ```
 
-Without global `turbo`, use your package manager:
+#### `logger.error()`
 
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
+Used internally by TinyLogs error handling.
+
+---
+
+# TypeScript Support
+
+TinyLogs ships with built-in TypeScript types.
+
+No additional typings required.
+
+---
+
+# Example Project Structure
+
+```txt
+src/
+├── middleware/
+├── logger/
+├── routes/
+└── server.ts
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+---
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+# Why TinyLogs?
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Most loggers are either:
 
-```sh
-turbo link
-```
+* too noisy
+* hard to read
+* overly configurable
+* difficult to setup
 
-Without global `turbo`:
+TinyLogs focuses on:
 
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
+* simplicity
+* request grouping
+* clean developer experience
+* readable terminal output
 
-## Useful Links
+---
 
-Learn more about the power of Turborepo:
+# Roadmap
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+* Pretty log themes
+* File transports
+* JSON logging mode
+* Better async log grouping
+* Framework adapters
+* Browser/devtools support
+
+---
+
+# License
+
+MIT
