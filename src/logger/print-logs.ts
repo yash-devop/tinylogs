@@ -5,7 +5,7 @@ import { LOG_COLORS } from "@/utils/log-style";
 import { styleText } from "node:util";
 import { generateMetaData } from "./generate-meta";
 
-export const buildLogString = (store: Store) => {
+export const printLogs = (store: Store) => {
   generateMetaData(getContext()?.requestId!);
 
   const logs = store.logs;

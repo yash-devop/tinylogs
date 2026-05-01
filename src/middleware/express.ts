@@ -1,6 +1,6 @@
 import { setContext } from "@/core/context";
 import { Storage } from "@/core/storage";
-import { buildLogString } from "@/logger/build-log-string";
+import { printLogs } from "@/logger/print-logs";
 import { useTinyLogs } from "@/logger/logger";
 import { Method, Store, TinylogsType } from "@/types/types";
 import { NextFunction, Request, Response } from "express";
@@ -26,7 +26,7 @@ export const tinylogs = () => {
       });
 
       res.on("finish", () => {
-        buildLogString(store);
+        printLogs(store);
       });
 
       req.log = { ...loggerMethods };
