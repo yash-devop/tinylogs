@@ -10,7 +10,7 @@ export const normalizeInputMessage = (data: any): NormalizeInputMessage[] => {
       if (value !== null && typeof value === "object") {
         str += `${key}=${JSON.stringify(value)} `;
       } else {
-        str += `${key}=${value} `;
+        str += `${key}="${value}" `;
       }
     });
 

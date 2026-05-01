@@ -1,6 +1,6 @@
 import { setContext } from "@/core/context";
 import { Storage } from "@/core/storage";
-import { generateMetaData } from "@/logger/generate-meta";
+import { buildLogString } from "@/logger/build-log-string";
 import { useTinyLogs } from "@/logger/logger";
 import { Method, Store, TinylogsType } from "@/types/types";
 import { NextFunction, Request, Response } from "express";
@@ -21,8 +21,13 @@ export const tinylogs = () => {
         statusCode: req.statusCode ?? "404",
         requestId: store.requestId,
         startTime,
+        level: "info",
+        logs: [],
       });
-      generateMetaData(store.requestId, "error");
+
+      res.on("finish", () => {
+        buildLogString(store);
+      });
 
       req.log = { ...loggerMethods };
       next();

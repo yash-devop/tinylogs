@@ -1,7 +1,6 @@
 import { getContext } from "@/core/context";
-import { generateMetaData } from "@/logger/generate-meta";
 import { LogParameter, TinylogsType } from "@/types/types";
-import { buildLogString } from "./build-log-string";
+import { updateLevel } from "./update-level";
 
 export const useTinyLogs = (): TinylogsType => {
   const store = getContext();
@@ -11,9 +10,8 @@ export const useTinyLogs = (): TinylogsType => {
       console.warn("no store context");
       return;
     }
-    const { requestId } = store;
-    generateMetaData(requestId, "info");
-    buildLogString(message);
+    updateLevel("info");
+    store.logs.push({ level: "info", message });
   };
 
   const warn = (message: string) => {
@@ -21,9 +19,8 @@ export const useTinyLogs = (): TinylogsType => {
       console.warn("no store context");
       return;
     }
-    const { requestId } = store;
-    generateMetaData(requestId, "warn");
-    buildLogString(message, "warn");
+    updateLevel("warn");
+    store.logs.push({ level: "warn", message: { warn: message } });
   };
 
   const error = () => {
@@ -31,9 +28,12 @@ export const useTinyLogs = (): TinylogsType => {
       console.warn("no store context");
       return;
     }
-    const { requestId, errors } = store;
-    generateMetaData(requestId, "error");
-    buildLogString(JSON.stringify(errors), "error");
+    updateLevel("error");
+    const { errors } = store;
+    store.logs.push({
+      level: "error",
+      message: { error: JSON.stringify(errors) },
+    });
   };
   return { set, warn, error };
 };

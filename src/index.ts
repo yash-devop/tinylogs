@@ -13,9 +13,6 @@ app.use(tinylogs());
 app.get("/", async (req: Request, res: Response) => {
   const logger = useTinyLogs();
 
-  res.on("finish", () => {
-    console.log("[FINISHED]");
-  });
   console.log("start");
   req.log.set({
     message: "Message directly from request object.",
@@ -56,7 +53,7 @@ app.get("/", async (req: Request, res: Response) => {
     why: "because you used development id",
   });
 
-  // return res.json("working");
+  return res.json("working");
 });
 
 app.use(errorMiddleware);

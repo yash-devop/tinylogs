@@ -1,29 +1,16 @@
 import { getContext } from "@/core/context";
-import { LevelsType, Type } from "@/types/types";
-import { LOG_STYLE } from "@/utils/log-style";
+import { LOG_COLORS, LOG_LEVEL } from "@/utils/log-style";
 import { styleText } from "node:util";
 
-const RequestMap = new Map<string, boolean>();
-
-const LEVELS: LevelsType = {
-  info: "INFO",
-  warn: "WARN",
-  error: "ERROR",
-};
-
-export const generateMetaData = (requestId: string, type: Type = "info") => {
+export const generateMetaData = (requestId: string) => {
   const store = getContext();
   if (!store) {
     console.warn("no store context");
     return;
   }
 
-  const { method, route, startTime } = store;
-  if (RequestMap.has(requestId)) {
-    return;
-  }
+  const { method, route, startTime, level } = store;
 
-  RequestMap.set(requestId, true);
   const date = new Date();
   const intl = new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
@@ -37,7 +24,7 @@ export const generateMetaData = (requestId: string, type: Type = "info") => {
   const responseTime = performance.now() - startTime;
   console.log(
     styleText(["gray"], formattedDate),
-    styleText([LOG_STYLE[type]], `[${LEVELS[type]}]`),
+    styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
     method,
     route,
     "in",

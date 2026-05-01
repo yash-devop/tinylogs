@@ -11,7 +11,10 @@ export type TinylogsType = {
 
 export type Type = "info" | "warn" | "error";
 export type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type LevelsType = Record<Type, string>;
+export type LevelsType = {
+  level: Type;
+  message: LogParameter;
+}[];
 export type Store = {
   requestId: string;
   method?: Method;
@@ -19,6 +22,8 @@ export type Store = {
   statusCode: string | number;
   startTime: number;
   errors?: TinyLogErrorOptions;
+  level: Type;
+  logs: LevelsType;
 };
 
 export type NormalizeInputMessage = {

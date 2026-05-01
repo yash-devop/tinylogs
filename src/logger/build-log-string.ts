@@ -1,28 +1,34 @@
-import { LogParameter, LogType } from "@/types/types";
+import { getContext } from "@/core/context";
+import { LevelsType, Store } from "@/types/types";
 import { normalizeInputMessage } from "@/utils/flatten-log-obj";
-import { LOG_STYLE } from "@/utils/log-style";
-import { InspectColor, styleText } from "node:util";
+import { LOG_COLORS } from "@/utils/log-style";
+import { styleText } from "node:util";
+import { generateMetaData } from "./generate-meta";
 
-export const buildLogString = (
-  message: LogParameter,
-  type: LogType = "info",
-) => {
-  const logStr = normalizeInputMessage(message);
+export const buildLogString = (store: Store) => {
+  generateMetaData(getContext()?.requestId!);
 
-  if (typeof message === "string") {
-    const prettyMsg =
-      styleText(["gray"], "├─") + " " + styleText([LOG_STYLE[type]], message);
-    console.log(prettyMsg);
-    return;
+  const logs = store.logs;
+  for (let log of logs) {
+    const logStr = normalizeInputMessage(log.message);
+
+    if (typeof logs === "string") {
+      const prettyMsg =
+        styleText(["gray"], "├─") +
+        " " +
+        styleText([LOG_COLORS[log.level]], String(log.message));
+      console.log(prettyMsg);
+      return;
+    }
+    logStr.forEach((str) => {
+      const prettyMsg =
+        styleText(["gray"], "├─") +
+        " " +
+        styleText([LOG_COLORS[log.level]], str?.key) +
+        ": " +
+        styleText(["white"], String(str?.nestedStr));
+
+      console.log(prettyMsg);
+    });
   }
-  logStr.forEach((str) => {
-    const prettyMsg =
-      styleText(["gray"], "├─") +
-      " " +
-      styleText(["cyan"], str?.key) +
-      ": " +
-      styleText(["white"], str?.nestedStr);
-
-    console.log(prettyMsg);
-  });
 };
