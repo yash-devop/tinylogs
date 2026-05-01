@@ -45,7 +45,9 @@ app.get("/", async (req: Request, res: Response) => {
 
   logger.warn("Warning log");
 
-  await getUser();
+  logger.set("fetching users");
+  const users = await getUser();
+  logger.set(`fetched ${users} users`);
   throw new TinyLogError({
     message: "Payment Failed",
     status: 503,

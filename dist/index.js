@@ -1,13 +1,13 @@
 import {
   errorMiddleware
-} from "./chunk-6MMSJOXM.js";
+} from "./chunk-76M472UZ.js";
 import {
   tinylogs
-} from "./chunk-X4O6LOCM.js";
+} from "./chunk-3LXT2OML.js";
 import {
   getUser
-} from "./chunk-RANMZJDM.js";
-import "./chunk-7ZK2A6ZF.js";
+} from "./chunk-X4BLZX2L.js";
+import "./chunk-EFEQ42PX.js";
 import "./chunk-UI2SU2NQ.js";
 import {
   TinyLogError
@@ -16,7 +16,7 @@ import "./chunk-F4NCMQWD.js";
 import "./chunk-XKC2T3YM.js";
 import {
   useTinyLogs
-} from "./chunk-NQUISDFW.js";
+} from "./chunk-54NNCMIF.js";
 import "./chunk-7AWXYSQG.js";
 import "./chunk-SYOW6WOI.js";
 import "./chunk-VDWADJO2.js";
@@ -58,7 +58,9 @@ app.get("/", async (req, res) => {
   });
   console.log("end2");
   logger.warn("Warning log");
-  await getUser();
+  logger.set("fetching users");
+  const users = await getUser();
+  logger.set(`fetched ${users} users`);
   throw new TinyLogError({
     message: "Payment Failed",
     status: 503,

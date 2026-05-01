@@ -20,7 +20,7 @@ export const useTinyLogs = (): TinylogsType => {
       return;
     }
     updateLevel("warn");
-    store.logs.push({ level: "warn", message: { warn: message } });
+    store.logs.push({ level: "warn", message: message });
   };
 
   const error = () => {
@@ -32,7 +32,9 @@ export const useTinyLogs = (): TinylogsType => {
     const { errors } = store;
     store.logs.push({
       level: "error",
-      message: { error: JSON.stringify(errors) },
+      message: {
+        error: JSON.stringify(errors),
+      },
     });
   };
   return { set, warn, error };

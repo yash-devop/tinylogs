@@ -1,4 +1,5 @@
 import { TinyLogError } from "@/logger/create-error";
+import { useTinyLogs } from "@/logger/logger";
 import { NextFunction, Request, Response } from "express";
 
 export const errorMiddleware = (
@@ -7,8 +8,10 @@ export const errorMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
+  const logger = useTinyLogs();
   if (err instanceof TinyLogError) {
-    req.log.error(err.message);
+    // req.log.error(err.message);
+    logger.error(err.message);
     return res.json(err);
   }
   if (err instanceof Error) {

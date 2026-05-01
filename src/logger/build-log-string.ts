@@ -9,7 +9,15 @@ export const buildLogString = (store: Store) => {
   generateMetaData(getContext()?.requestId!);
 
   const logs = store.logs;
-  for (let log of logs) {
+  logs.forEach((log) => {
+    if (typeof log.message === "string") {
+      const prettyMsg =
+        styleText(["gray"], "├─") +
+        " " +
+        styleText([LOG_COLORS[log.level]], String(log.message));
+      console.log(prettyMsg);
+      return;
+    }
     const logStr = normalizeInputMessage(log.message);
 
     if (typeof logs === "string") {
@@ -30,5 +38,5 @@ export const buildLogString = (store: Store) => {
 
       console.log(prettyMsg);
     });
-  }
+  });
 };
