@@ -5,7 +5,7 @@ import express, { Request, Response } from "express";
 // import { tinylogs } from "./middleware/express";
 // import { getUser } from "./test";
 // import { createError } from "./logger/create-error";
-import { createError, tinylogs, useTinyLogs } from "@tinylogs/sdk";
+import { createError, tinylogs, useTinyLogs } from "@yash-devop/tinylog";
 const app = express();
 
 app.use(express.json());
