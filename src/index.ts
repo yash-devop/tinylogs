@@ -4,6 +4,7 @@ import { useTinyLogs } from "./logger/logger";
 import { errorMiddleware } from "./middleware/error-middleware";
 import { tinylogs } from "./middleware/express";
 import { getUser } from "./test";
+import { createError } from "./logger/create-error";
 
 const app = express();
 
@@ -49,7 +50,9 @@ app.get("/", async (req: Request, res: Response) => {
   const users = await getUser();
   logger.set(`fetched ${users} users`);
   // throw new TinyLogError("ERROR HU MEIN");
-  throw new TinyLogError(new Error("jod"));
+  // throw new TinyLogError(new Error("jod"));
+
+  throw createError("ERror bolte bro");
   // throw new TinyLogError({
   //   message: "Payment Failed",
   //   status: 503,
