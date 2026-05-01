@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
-import { TinyLogError } from "./core/errors";
-import { useTinyLogs } from "./logger/logger";
-import { errorMiddleware } from "./middleware/error-middleware";
-import { tinylogs } from "./middleware/express";
-import { getUser } from "./test";
-import { createError } from "./logger/create-error";
-
+// import { TinyLogError } from "./core/errors";
+// import { useTinyLogs } from "./logger/logger";
+// import { errorMiddleware } from "./middleware/error-middleware";
+// import { tinylogs } from "./middleware/express";
+// import { getUser } from "./test";
+// import { createError } from "./logger/create-error";
+import { createError, tinylogs, useTinyLogs } from "@tinylogs/sdk";
 const app = express();
 
 app.use(express.json());
@@ -47,12 +47,10 @@ app.get("/", async (req: Request, res: Response) => {
   logger.warn("Warning log");
 
   logger.set("fetching users");
-  const users = await getUser();
-  logger.set(`fetched ${users} users`);
   // throw new TinyLogError("ERROR HU MEIN");
   // throw new TinyLogError(new Error("jod"));
 
-  throw createError("ERror bolte bro");
+  // throw createError("ERror bolte bro");
   // throw new TinyLogError({
   //   message: "Payment Failed",
   //   status: 503,
@@ -62,5 +60,5 @@ app.get("/", async (req: Request, res: Response) => {
   return res.json("working");
 });
 
-app.use(errorMiddleware);
+// app.use(errorMiddleware);
 app.listen(8000);

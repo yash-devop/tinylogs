@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "dev": "tsup src/index.ts --watch --format esm,cjs --onSuccess \"nodemon dist/index.mjs\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yash-devop/tinylogs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yash-devop/tinylogs/issues"
+  },
+  "homepage": "https://github.com/yash-devop/tinylogs#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "typescript": "5.9.2",
+    "@tinylogs/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.2",
+    "tsup": "^8.5.1"
+  }
+}
