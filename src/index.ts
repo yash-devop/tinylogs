@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
-import { TinyLogError } from "./logger/create-error";
+import { TinyLogError } from "./core/errors";
 import { useTinyLogs } from "./logger/logger";
+import { errorMiddleware } from "./middleware/error-middleware";
 import { tinylogs } from "./middleware/express";
 import { getUser } from "./test";
-import { errorMiddleware } from "./middleware/error-middleware";
 
 const app = express();
 
@@ -48,13 +48,14 @@ app.get("/", async (req: Request, res: Response) => {
   logger.set("fetching users");
   const users = await getUser();
   logger.set(`fetched ${users} users`);
-  throw new TinyLogError({
-    message: "Payment Failed",
-    status: 503,
-    fix: "retry the same method with different pay id",
-    why: "because you used development id",
-  });
-
+  // throw new TinyLogError("ERROR HU MEIN");
+  throw new TinyLogError(new Error("jod"));
+  // throw new TinyLogError({
+  //   message: "Payment Failed",
+  //   status: 503,
+  //   fix: "retry the same method with different pay id",
+  //   why: "because you used development id",
+  // });
   return res.json("working");
 });
 

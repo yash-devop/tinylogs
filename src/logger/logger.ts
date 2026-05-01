@@ -1,6 +1,7 @@
 import { getContext } from "@/core/context";
 import { LogParameter, TinylogsType } from "@/types/types";
 import { updateLevel } from "./update-level";
+import { TinyLogError } from "@/core/errors";
 
 export const useTinyLogs = (): TinylogsType => {
   const store = getContext();
@@ -23,17 +24,27 @@ export const useTinyLogs = (): TinylogsType => {
     store.logs.push({ level: "warn", message: message });
   };
 
-  const error = () => {
+  const error = (err: Error | string) => {
     if (!store) {
       console.warn("no store context");
       return;
     }
     updateLevel("error");
-    const { errors } = store;
+    const isTinyError = err instanceof TinyLogError;
+
     store.logs.push({
       level: "error",
       message: {
-        error: JSON.stringify(errors),
+        error: {
+          name: err instanceof Error ? err.name : "Error",
+          message: err instanceof Error ? err.message : err,
+          stack: err instanceof Error ? err.stack : undefined,
+          ...(isTinyError && {
+            status: err.status,
+            ...(err.why ? { why: err.why } : ""),
+            ...(err.fix ? { fix: err.fix } : ""),
+          }),
+        },
       },
     });
   };
