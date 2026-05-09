@@ -86,7 +86,7 @@ const BlockTab = ({
     <Tabs.Trigger
       value={value}
       className="
-      flex items-center gap-1 p-2 leading-3 w-fit bg-neutral-100
+      flex items-center gap-1 py-1.5 px-1 leading-3 w-fit bg-neutral-100
       rounded-sm transition border-0 ring-0
       focus-visible:ring-0 focus-visible:outline-none
       data-[active=true]:ring

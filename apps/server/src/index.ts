@@ -11,9 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(tinylogs());
 
+app.on("mount", () => {
+  console.log("MOUNTED");
+});
+
 app.get("/", async (req: Request, res: Response) => {
   const logger = useTinyLogs();
-
   console.log("start");
   req.log.set({
     message: "Message directly from request object.",
