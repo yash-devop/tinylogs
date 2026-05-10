@@ -8,9 +8,11 @@ type AnimationDataStructure = {
 
 type TAnimationInterval<T> = {
   data: T[];
+  interval?: number;
 };
 export function useAnimationInterval<T extends AnimationDataStructure>({
   data,
+  interval = 3000,
 }: TAnimationInterval<T>) {
   const [currentActive, setCurrentActive] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -20,7 +22,7 @@ export function useAnimationInterval<T extends AnimationDataStructure>({
     } else {
       intervalRef.current = setInterval(() => {
         setCurrentActive((prev) => (prev + 1) % data?.length);
-      }, 2500);
+      }, interval);
     }
 
     return () => {
@@ -28,7 +30,7 @@ export function useAnimationInterval<T extends AnimationDataStructure>({
         clearInterval(intervalRef.current);
       }
     };
-  }, [data?.length]);
+  }, [data?.length, interval]);
   return {
     currentActive,
     renderActiveElement: data[currentActive],
