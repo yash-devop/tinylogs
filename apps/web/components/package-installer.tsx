@@ -50,9 +50,17 @@ const BlockRoot = ({ className, children, defaultOpen }: TRootProps) => {
   );
 };
 
-const BlockList = ({ children }: { children: React.ReactNode }) => {
+const BlockList = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <Tabs.TabsList className="w-full p-0 pl-2.5">{children}</Tabs.TabsList>
+    <Tabs.TabsList className={cn("w-full p-0 pl-2.5", className)}>
+      {children}
+    </Tabs.TabsList>
   );
 };
 
@@ -78,21 +86,26 @@ const BlockHeader = ({
 const BlockTab = ({
   value,
   children,
+  className,
 }: {
   value: string;
   children: React.ReactNode;
+  className?: string;
 }) => {
   return (
     <Tabs.Trigger
       value={value}
-      className="
+      className={cn(
+        `
       flex items-center gap-1 py-1.5 px-1 leading-3 w-fit bg-neutral-100
       rounded-sm transition border-0 ring-0
       focus-visible:ring-0 focus-visible:outline-none
       data-[active=true]:ring
       data-[active=true]:ring-neutral-300
       hover:bg-neutral-200
-    "
+    `,
+        className,
+      )}
     >
       {children}
     </Tabs.Trigger>

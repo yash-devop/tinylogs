@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SAMPLE_LOGS_DATA } from "../../constants";
 import { FlowType, LogType } from "../../types/types";
 import { cn } from "../../utils/cn";
+import { IDENavDots } from "./ide-nav-dots";
 
 export const IDEStructure = ({
   type,
@@ -347,28 +348,18 @@ export const IDEStructure = ({
   );
 };
 
-function IDEHeader({
+export function IDEHeader({
   type,
   changeType,
 }: { changeType: Dispatch<SetStateAction<FlowType["type"]>> } & FlowType) {
   return (
     <header className="h-12 shrink-0 w-full border-b border-stone-800 flex items-center justify-between text-stone-500 px-4">
-      <div className="flex items-center gap-x-1">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className={cn(
-              "size-2.5 rounded-full",
-              type === "old" ? "bg-neutral-500/50" : "bg-primary/50",
-            )}
-          />
-        ))}
-      </div>
+      <IDENavDots length={3} type={type} />
       <span className="text-xs md:pl-24">
         {type === "old" ? "generic logs" : "tinylogs."}
       </span>
       <button
-        onClick={() => changeType({ type: "new" })}
+        onClick={() => changeType("new")}
         className="text-xs ring ring-primary hover:bg-primary/30
          text-white px-2 py-1 flex items-center gap-x-2 cursor-pointer"
       >
@@ -379,7 +370,7 @@ function IDEHeader({
   );
 }
 
-function IDENavigation() {
+export function IDENavigation() {
   return (
     <div className="h-8 shrink-0 w-full border-y border-stone-700/50  flex flex-col justify-center gap-3 overflow-y-auto  min-h-0 bg-stone-800">
       <div className="flex items-center px-3 text-stone-500 gap-x-5">

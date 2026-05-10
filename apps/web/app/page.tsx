@@ -1,11 +1,14 @@
 import { IconBrandGithub } from "@tabler/icons-react";
 import { Header } from "../components/header";
-import { LogsFlowWorkArea } from "../components/logs-flow/LogsFlow";
-import { cn } from "../utils/cn";
 import * as HeadingSection from "../components/heading-section";
 import * as Seperator from "../components/heading-seperator/heading-seperator";
+import { SetContextSection } from "../components/landing-page/set-context-section";
+import { LogsFlowWorkArea } from "../components/logs-flow/LogsFlow";
 import { MainSection } from "../components/main-section";
 import { StatusPing } from "../components/status-ping";
+import { FrameworkSection } from "../components/landing-page/frameworks-section";
+import { NpmInstallCTA } from "../components/npm-install-cta";
+import { CurrentPageIndicator } from "../components/current-page-indicator";
 export default function Home() {
   return (
     <section className="relative min-h-screen w-full [--pattern:var(--color-neutral-300)] overflow-hidden">
@@ -34,10 +37,7 @@ export default function Home() {
           </p>
 
           <div className="flex items-center gap-x-6 tracking-tight pt-4 pb-10">
-            <button className="px-4 py-2 cursor-pointer rounded-xl ring-offset-2 ring-offset-rose-400 ring ring-rose-500 bg-linear-to-b from-rose-400 from-0% via-0% via-primary to-rose-400 to-80% text-white hover:ring-offset-rose-300/70 transition-all duration-200">
-              Get Started
-            </button>
-
+            <NpmInstallCTA packageName="npm i @yash-devop/tinylog" />
             <button className="px-4 py-2 space-x-1 cursor-pointer rounded-xl ring ring-neutral-400 ring-offset-2 shadow-xs bg-neutral-200">
               <IconBrandGithub className="inline" size={18} />
               <span>Github</span>
@@ -52,16 +52,15 @@ export default function Home() {
               <Seperator.Section className="-z-10">
                 <Seperator.Heading>
                   <StatusPing />
-                  Simple API
+                  Tinylogs api usage
                 </Seperator.Heading>
                 <Seperator.SubHeading>
-                  <StatusPing />
-                  Simple API
+                  <CurrentPageIndicator section={1} total={2} />
                 </Seperator.SubHeading>
               </Seperator.Section>
               <HeadingSection.Section className="">
-                <HeadingSection.Heading className="text-3xl tracking-tight font-medium ">
-                  Set Contexts
+                <HeadingSection.Heading className="text-3xl tracking-tight font-semibold font-geist-sans text-neutral-700">
+                  Set context to every log
                 </HeadingSection.Heading>
                 <HeadingSection.Description className="text-neutral-500">
                   Track requests, users, services, and metadata effortlessly
@@ -70,33 +69,14 @@ export default function Home() {
                 </HeadingSection.Description>
               </HeadingSection.Section>
             </MainSection>
+            <SetContextSection />
+            <FrameworkSection />
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-const HorizontalScale = ({ className }: { className?: string }) => {
-  return (
-    <div
-      className={cn(
-        "h-10 w-full bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-y border-[var(--pattern)]",
-        className,
-      )}
-    />
-  );
-};
-const VerticalScale = ({ className }: { className?: string }) => {
-  return (
-    <div
-      className={cn(
-        "w-10 h-full bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-x border-[var(--pattern)] -z-10",
-        className,
-      )}
-    />
-  );
-};
 
 {
   /* <div className="space-y-6 w-fit">

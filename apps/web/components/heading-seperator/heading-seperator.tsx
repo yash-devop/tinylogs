@@ -1,45 +1,50 @@
 import { cn } from "../../utils/cn";
 
-const Section = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+type SectionProps = React.ComponentProps<"div">;
+
+const Section = ({ className, children, ...props }: SectionProps) => {
   return (
     <div
-      className={`absolute inset-x-0 -top-6 h-16 border-y border-neutral-300 w-full  ${className}`}
+      className={cn(
+        "absolute inset-x-0 -top-6 h-16 w-full [--pattern:var(--color-neutral-200)] border-y border-neutral-300 bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-y border-[var(--pattern)] -z-10",
+        className,
+      )}
+      {...props}
     >
-      <div className="flex items-center justify-between w-full h-full px-6">
+      <div className="flex h-full w-full items-center justify-between px-6">
         {children}
       </div>
+      {/* <div
+        className={cn(
+          "h-10 w-full bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-y border-[var(--pattern)]",
+          className,
+        )}
+      /> */}
     </div>
   );
 };
 
-const Heading = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+type HeadingProps = React.ComponentProps<"div">;
+
+const Heading = ({ className, children, ...props }: HeadingProps) => {
   return (
-    <div className={cn("text-neutral-400 text-sm flex gap-x-2.5", className)}>
+    <div
+      className={cn("flex gap-x-2.5 text-sm text-neutral-400", className)}
+      {...props}
+    >
       {children}
     </div>
   );
 };
-const SubHeading = ({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+
+type SubHeadingProps = React.ComponentProps<"span">;
+
+const SubHeading = ({ className, children, ...props }: SubHeadingProps) => {
   return (
-    <span className={cn("text-neutral-400 text-sm", className)}>
+    <span
+      className={cn("flex gap-x-2.5 text-sm text-neutral-400", className)}
+      {...props}
+    >
       {children}
     </span>
   );

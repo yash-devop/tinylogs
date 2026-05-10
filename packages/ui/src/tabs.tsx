@@ -27,10 +27,8 @@ const Root = ({
 
     if (!defaultOpen || !tabValues.includes(defaultOpen)) {
       setOpen(tabValues[0] as string);
-    } else {
-      setOpen(defaultOpen);
     }
-  }, [children, defaultOpen]);
+  }, [children, defaultOpen, tabValues]);
   return (
     <TabContext.Provider value={{ openTab, setOpen }}>
       <div>{children}</div>
