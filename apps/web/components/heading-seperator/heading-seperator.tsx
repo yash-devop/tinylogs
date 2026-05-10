@@ -5,10 +5,7 @@ type SectionProps = React.ComponentProps<"div">;
 const Section = ({ className, children, ...props }: SectionProps) => {
   return (
     <div
-      className={cn(
-        "absolute inset-x-0 -top-6 h-16 w-full [--pattern:var(--color-neutral-200)] border-y border-neutral-300 bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-y border-[var(--pattern)] -z-10",
-        className,
-      )}
+      className={`absolute inset-x-0 -top-6 h-16 w-full [--pattern:var(--color-neutral-200)] bg-fixed bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_1px,transparent_50%)] bg-[size:10px_10px] border-y border-[var(--pattern)] -z-10 ${className}`}
       {...props}
     >
       <div className="flex h-full w-full items-center justify-between px-6">

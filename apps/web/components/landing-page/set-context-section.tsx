@@ -5,6 +5,7 @@ import { cn } from "../../utils/cn";
 import * as CodeBlock from "../code-block";
 import { motion } from "motion/react";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
+import React from "react";
 
 type ContextExampleStatus = {
   id: number | string;
@@ -166,6 +167,7 @@ export const SetContextSection = () => {
       data: iterableArray,
     });
 
+  const JSX = renderActiveElement?.jsx;
   return (
     <div className="flex w-full h-full flex-col gap-2 px-2 pb-5 lg:flex-row">
       <CodeBlock.Root className="min-w-0 flex-1">

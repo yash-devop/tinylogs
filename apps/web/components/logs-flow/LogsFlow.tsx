@@ -16,7 +16,7 @@ export const LogsFlowWorkArea = () => {
   const [changeUi, setChangeUi] = useState<FlowType["type"]>("old");
   return (
     <>
-      <div className="hidden lg:grid relative w-fit grid-cols-[auto_auto_auto_auto] gap-x-12 mx-auto pb-40 min-h-[420px] pl-12">
+      <div className="hidden md:grid relative w-fit grid-cols-[auto_auto_auto_auto] gap-x-12 mx-auto pb-40 min-h-[420px] pl-12">
         <ServiceCube name="API Server" Icon={IconServer}>
           <motion.svg
             width="237"

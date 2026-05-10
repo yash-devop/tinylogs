@@ -1,24 +1,15 @@
 "use client";
-import { MainSection } from "../main-section";
-import * as Seperator from "../heading-seperator/heading-seperator";
-import * as HeadingSection from "../heading-section";
-import { StatusPing } from "../status-ping";
 import { ExpressLogo, NextjsLogo, ViteLogo } from "@tinylogs/ui/logos";
-import { useAnimationInterval } from "../../hooks/useAnimationInterval";
 import { CurrentPageIndicator } from "../current-page-indicator";
-import {
-  BlockContent,
-  BlockCopy,
-  BlockHeader,
-  BlockList,
-  BlockRoot,
-  BlockTab,
-} from "../package-installer";
+import * as HeadingSection from "../heading-section";
+import * as Seperator from "../heading-seperator/heading-seperator";
+import { MainSection } from "../main-section";
+import { StatusPing } from "../status-ping";
 
 type FrameworkType = {
   id: string | number;
   name: string;
-  jsx: React.ReactNode;
+  jsx: React.ElementType;
 };
 const FRAMEWORKS_DATA = [
   {
@@ -39,10 +30,10 @@ const FRAMEWORKS_DATA = [
 ];
 
 export const FrameworkSection = () => {
-  const { currentActive, renderActiveElement } =
-    useAnimationInterval<FrameworkType>({
-      data: FRAMEWORKS_DATA,
-    });
+  // const { currentActive, renderActiveElement } =
+  //   useAnimationInterval<FrameworkType>({
+  //     data: FRAMEWORKS_DATA,
+  //   });
   return (
     <div className="flex w-full h-full flex-col gap-2 pb-5 pt-28 pb-12 lg:flex-row">
       <div className="relative w-full h-full flex flex-col gap-y-10">
@@ -57,7 +48,7 @@ export const FrameworkSection = () => {
             </Seperator.SubHeading>
           </Seperator.Section>
           <HeadingSection.Section className="">
-            <HeadingSection.Heading className="text-3xl tracking-tight font-semibold font-geist-sans text-neutral-700">
+            <HeadingSection.Heading className="text-xl md:text-3xl tracking-tight font-semibold font-geist-sans text-neutral-700">
               Your Framework. Our Logs
             </HeadingSection.Heading>
             <HeadingSection.Description className="text-neutral-500">
@@ -66,37 +57,8 @@ export const FrameworkSection = () => {
             </HeadingSection.Description>
           </HeadingSection.Section>
         </MainSection>
-        <BlockRoot defaultOpen="npm" className="max-w-md rounded-xl">
-          <BlockHeader className="px-2 py-1.5">
-            <BlockList className="gap-1">
-              <BlockTab value="npm" className="w-fit">
-                <span className="text-[13px] text-neutral-700">npm</span>
-              </BlockTab>
-
-              <BlockTab value="pnpm">
-                <span className="text-[13px] text-neutral-700">pnpm</span>
-              </BlockTab>
-            </BlockList>
-
-            <BlockCopy />
-          </BlockHeader>
-
-          <BlockContent
-            value="npm"
-            className="px-3 py-2.5 font-mono text-[13px] text-neutral-700"
-          >
-            npm i @yash-devop/tinylog
-          </BlockContent>
-
-          <BlockContent
-            value="pnpm"
-            className="px-3 py-2.5 font-mono text-[13px] text-neutral-700"
-          >
-            pnpm add @yash-devop/tinylog
-          </BlockContent>
-        </BlockRoot>
         <div className="flex justify-center">
-          <div className="grid w-fit grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 border border-neutral-200">
+          <div className="grid w-fit grid-cols-3 border border-neutral-200">
             {FRAMEWORKS_DATA.map((frameworkUnit, index) => {
               const Logo = frameworkUnit?.jsx;
 
@@ -116,6 +78,28 @@ export const FrameworkSection = () => {
             })}
           </div>
         </div>
+
+        <section className="w-full flex items-center justify-center px-6 py-24 bg-white">
+          <div className="max-w-2xl w-full text-center">
+            <div className="space-y-4">
+              <h2 className="text-xl md:text-3xl font-semibold tracking-tight text-neutral-700">
+                Ready to debug smarter?
+              </h2>
+
+              <p className="text-lg leading-8 text-neutral-500 max-w-xl mx-auto">
+                Add TinyLogs in seconds. Structured logs, request tracing, and
+                cleaner debugging without the noise.
+              </p>
+            </div>
+
+            <div className="mt-10 flex items-center justify-center gap-3">
+              <div className="h-11 px-4 rounded-xl border border-neutral-300 bg-white flex items-center gap-3 text-sm font-mono text-neutral-700">
+                <span className="text-neutral-400">$</span>
+                <span>npm i @yash-devop/tinylog</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

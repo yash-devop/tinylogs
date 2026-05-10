@@ -1,5 +1,6 @@
 import clsx, { ClassValue } from "clsx";
+import { twMerge } from "tw-merge";
 
 export const cn = (...classNames: ClassValue[]) => {
-  return clsx(classNames);
+  return twMerge(clsx(classNames));
 };
