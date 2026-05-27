@@ -1,6 +1,10 @@
 {
   "extends": "@tinylogs/typescript-config/nextjs.json",
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "collections/*": ["./.source/*"]
+    },
     "plugins": [
       {
         "name": "next"

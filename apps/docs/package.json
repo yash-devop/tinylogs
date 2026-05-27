@@ -11,10 +11,17 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
     "@tinylogs/ui": "workspace:*",
+    "@types/mdx": "^2.0.13",
+    "fumadocs-core": "^16.8.9",
+    "fumadocs-mdx": "^15.0.2",
+    "fumadocs-ui": "^16.8.9",
     "next": "16.2.0",
+    "postcss": "^8.5.13",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "@tinylogs/eslint-config": "workspace:*",
