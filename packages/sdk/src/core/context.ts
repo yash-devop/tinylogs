@@ -10,5 +10,11 @@ export const setContext = <T extends Partial<Store>>(ctx: T) => {
 };
 
 export const getContext = () => {
-  return Storage.getStore();
+  const store = Storage.getStore();
+  if (!store) {
+    throw new Error(
+      "[TinyLogs] No active request context found. Make sure to register the TinyLogs middleware before using useTinyLogs().",
+    );
+  }
+  return store;
 };

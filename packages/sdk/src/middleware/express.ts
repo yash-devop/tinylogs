@@ -1,7 +1,7 @@
 import { setContext } from "@/core/context";
 import { Storage } from "@/core/storage";
-import { printLogs } from "@/logger/print-logs";
 import { useTinyLogs } from "@/logger/logger";
+import { printLogs } from "@/logger/print-logs";
 import { Method, Store, TinylogsType } from "@/types/types";
 import { NextFunction, Request, Response } from "express";
 import { randomUUID } from "node:crypto";
@@ -13,7 +13,6 @@ export const tinylogs = () => {
     } as Store;
 
     Storage.run(store, () => {
-      const loggerMethods = useTinyLogs();
       const startTime = performance.now();
       setContext({
         method: req.method as Method,
@@ -29,7 +28,7 @@ export const tinylogs = () => {
         printLogs(store);
       });
 
-      req.log = { ...loggerMethods };
+      req.log = useTinyLogs();
       next();
     });
   };
