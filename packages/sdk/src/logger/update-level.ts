@@ -1,12 +1,8 @@
+import { LEVEL_PRIORITY } from "@/constants";
 import { getContext } from "@/core/context";
-import { Type } from "@/types/types";
+import { LogType } from "@/types/types";
 
-const LEVEL_PRIORITY = {
-  info: 1,
-  warn: 2,
-  error: 3,
-};
-export const updateLevel = (newLevel: Type) => {
+export const updateLevel = (newLevel: LogType) => {
   const store = getContext();
   if (!store) return;
 

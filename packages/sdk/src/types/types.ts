@@ -9,10 +9,9 @@ export type TinylogsType = {
   error: (message: Error | string) => void;
 };
 
-export type Type = "info" | "warn" | "error";
 export type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export type LevelsType = {
-  level: Type;
+  level: LogType;
   message: LogParameter;
 }[];
 export type Store = {
@@ -22,7 +21,7 @@ export type Store = {
   statusCode: string | number;
   startTime: number;
   errors?: TinyLogErrorOptions;
-  level: Type;
+  level: LogType;
   logs: LevelsType;
 };
 
