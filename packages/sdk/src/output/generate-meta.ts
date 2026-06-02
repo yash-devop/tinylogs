@@ -1,5 +1,5 @@
-import { getContext } from "@/core/context";
-import { LOG_COLORS, LOG_LEVEL } from "@/utils/log-style";
+import { getContext } from "@/context/context";
+import { LOG_COLORS, LOG_LEVEL } from "@/constants/log-style";
 import { styleText } from "node:util";
 
 export const generateMetaData = (requestId: string) => {

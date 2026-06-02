@@ -1,4 +1,4 @@
-import { setContext } from "@/core/context";
+import { setContext } from "@/context/context";
 import { TinyLogErrorOptions } from "@/types/types";
 
 export class TinyLogError extends Error {

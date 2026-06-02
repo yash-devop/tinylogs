@@ -1,27 +1,24 @@
+import {
+  tinylogs,
+  useTinyLogs,
+  createStandaloneLogger,
+} from "@yash-devop/tinylog";
 import express, { Request, Response } from "express";
-// import { TinyLogError } from "./core/errors";
-// import { useTinyLogs } from "./logger/logger";
-// import { errorMiddleware } from "./middleware/error-middleware";
-// import { tinylogs } from "./middleware/express";
-// import { getUser } from "./test";
-// import { createError } from "./logger/create-error";
-import { createError, tinylogs, useTinyLogs } from "@yash-devop/tinylog";
 const app = express();
 
 app.use(express.json());
 app.use(tinylogs());
 
-app.on("mount", () => {
-  console.log("MOUNTED");
-});
+const run = createStandaloneLogger();
 
 app.get("/", async (req: Request, res: Response) => {
   const logger = useTinyLogs();
-  console.log("start");
+  run.set("start");
   req.log.set({
     message: "Message directly from request object.",
   });
-  console.log("mid");
+
+  run.set("Mid");
   logger.set({
     name: "Yash",
     role: "Fullstack Engineer",
@@ -37,7 +34,8 @@ app.get("/", async (req: Request, res: Response) => {
       },
     },
   });
-  console.log("end");
+  run.set("end");
+
   logger.set({
     name: "John summit",
     role: "Producer",
@@ -50,18 +48,22 @@ app.get("/", async (req: Request, res: Response) => {
   logger.warn("Warning log");
 
   logger.set("fetching users");
-  // throw new TinyLogError("ERROR HU MEIN");
-  // throw new TinyLogError(new Error("jod"));
 
-  // throw createError("ERror bolte bro");
+  setTimeout(() => {
+    run.set("timeout res.");
+  }, 4000);
   // throw new TinyLogError({
   //   message: "Payment Failed",
   //   status: 503,
   //   fix: "retry the same method with different pay id",
   //   why: "because you used development id",
   // });
+
+  run.print();
   return res.json("working");
 });
 
 // app.use(errorMiddleware);
-app.listen(8000);
+app.listen(8000, () => {
+  run.set("Server started successfully");
+});

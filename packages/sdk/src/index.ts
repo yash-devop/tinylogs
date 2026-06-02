@@ -1,4 +1,4 @@
-export { tinylogs } from "./middleware/express";
-export { useTinyLogs } from "./logger/logger";
+export { tinylogs, useTinyLogs } from "./frameworks/express";
+export { createStandaloneLogger } from "./frameworks/standalone";
 export { TinyLogError } from "./core/errors";
-export { createError } from "./logger/create-error";
+export { createError } from "./utils/create-error";

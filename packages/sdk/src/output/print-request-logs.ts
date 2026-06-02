@@ -1,11 +1,11 @@
-import { getContext } from "@/core/context";
-import { LevelsType, Store } from "@/types/types";
+import { getContext } from "@/context/context";
+import { Store } from "@/types/types";
 import { normalizeInputMessage } from "@/utils/flatten-log-obj";
-import { LOG_COLORS } from "@/utils/log-style";
+import { LOG_COLORS } from "@/constants/log-style";
 import { styleText } from "node:util";
 import { generateMetaData } from "./generate-meta";
 
-export const printLogs = (store: Store) => {
+export const printRequestLogs = (store: Store) => {
   generateMetaData(getContext()?.requestId!);
 
   const logs = store.logs;

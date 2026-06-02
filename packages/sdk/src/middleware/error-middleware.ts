@@ -1,5 +1,5 @@
 import { TinyLogError } from "@/core/errors";
-import { useTinyLogs } from "@/logger/logger";
+import { useTinyLogs } from "@/frameworks/express";
 import { NextFunction, Request, Response } from "express";
 
 export const errorMiddleware = (

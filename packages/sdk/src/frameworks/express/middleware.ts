@@ -1,7 +1,7 @@
-import { setContext } from "@/core/context";
-import { Storage } from "@/core/storage";
-import { useTinyLogs } from "@/logger/logger";
-import { printLogs } from "@/logger/print-logs";
+import { setContext } from "@/context/context";
+import { Storage } from "@/context/storage";
+import { useTinyLogs } from "@/frameworks/express";
+import { printRequestLogs } from "@/output";
 import { Method, Store, TinylogsType } from "@/types/types";
 import { NextFunction, Request, Response } from "express";
 import { randomUUID } from "node:crypto";
@@ -25,7 +25,7 @@ export const tinylogs = () => {
       });
 
       res.on("finish", () => {
-        printLogs(store);
+        printRequestLogs(store);
       });
 
       req.log = useTinyLogs();
