@@ -1,46 +1,46 @@
-import {
-  Entry,
-  LevelsType,
-  LogParameter,
-  LogType,
-  Plugin,
-} from "@/types/types";
+import { Entry, Plugin } from "@/types/types";
 
-type CompressedLog = Entry & {
-  count: number;
-};
 export const xNCompression = (): Plugin => {
   return {
     name: "xN-Noise compression",
     transformLogs: (store) => {
       // compression logic.
-      const compressedMap = new Map<LogParameter, CompressedLog>();
-      let count = 1;
+      let compressedMap: Entry[] = [];
+      let currentEntry: Entry | null = null;
       for (const entry of store.logs) {
-        if (typeof entry.message !== "string") {
-          compressedMap.set(entry.message, {
-            ...entry,
-            count: 0,
-          });
+        if (
+          typeof entry.message !== "string" &&
+          typeof entry.message !== "number"
+        ) {
           continue;
         }
-        if (compressedMap.has(entry.message)) {
-          compressedMap.set(entry.message, {
+
+        if (!currentEntry) {
+          currentEntry = {
             ...entry,
-            level: entry.level as LogType,
-            count: ++count,
-          });
-        } else {
-          count = 1;
-          compressedMap.set(entry.message, {
-            ...entry,
-            level: entry.level as LogType,
-            count,
-          });
+            count: 1,
+          };
+
+          continue;
         }
+
+        if (currentEntry.message === entry.message) {
+          currentEntry.count!++;
+          continue;
+        }
+
+        compressedMap.push(currentEntry);
+
+        currentEntry = {
+          ...entry,
+          count: 1,
+        };
+      }
+      if (currentEntry) {
+        compressedMap.push(currentEntry);
       }
 
-      store.logs = [...compressedMap.values()];
+      store.logs = compressedMap;
       return store;
     },
   };
