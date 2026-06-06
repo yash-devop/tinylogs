@@ -1,23 +1,26 @@
 import { BaseLogger } from "@/core/base-logger";
-import { LevelsType, LogParameter, LogType } from "@/types/types";
+import {
+  LogParameter,
+  LogType,
+  Plugin,
+  RequestLoggerType,
+} from "@/types/types";
 
 export class RequestLogger extends BaseLogger {
   private hooks?: {
     onLevelChange: (newLevel: LogType) => void;
   };
+  protected plugins?: Plugin[];
 
-  constructor(
-    logs: LevelsType = [],
-    hooks?: {
-      onLevelChange: (newLevel: LogType) => void;
-    },
-  ) {
-    super(logs);
+  constructor({ logs = [], hooks, plugins }: RequestLoggerType) {
+    super({ logs, plugins });
     this.hooks = hooks;
+    this.plugins = plugins;
   }
 
   override set(message: LogParameter): void {
     this.hooks?.onLevelChange("info");
+
     super.set(message);
   }
 

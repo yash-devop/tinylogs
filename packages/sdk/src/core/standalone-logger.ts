@@ -5,7 +5,7 @@ import { printStandaloneLogs } from "@/output/print-standalone-logs";
 export class StandaloneLogger extends BaseLogger {
   logs: LevelsType = [];
   constructor(logs: LevelsType = []) {
-    super(logs);
+    super({ logs });
     this.logs = logs;
   }
   print() {

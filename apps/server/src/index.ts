@@ -1,7 +1,9 @@
 import {
+  defineConfig,
   tinylogs,
   useTinyLogs,
-  createStandaloneLogger,
+  xNCompression,
+  group,
 } from "@yash-devop/tinylog";
 import express, { Request, Response } from "express";
 const app = express();
@@ -9,16 +11,33 @@ const app = express();
 app.use(express.json());
 app.use(tinylogs());
 
-const run = createStandaloneLogger();
+defineConfig({
+  plugins: [xNCompression()],
+});
+
+// const run = createStandaloneLogger();
 
 app.get("/", async (req: Request, res: Response) => {
-  const logger = useTinyLogs();
-  run.set("start");
+  const logger = useTinyLogs({
+    formatter: group,
+  });
   req.log.set({
     message: "Message directly from request object.",
   });
 
-  run.set("Mid");
+  logger.set("user fetched");
+  logger.set("user fetched");
+  logger.set("user fetched");
+  logger.set("user fetched");
+  logger.set("user fetched xyz");
+  logger.set("user fetched xyz");
+  logger.set("user fetched xyz");
+  logger.set("user fetched xyz");
+  logger.set("user fetched xyz");
+  logger.set("user fetched");
+  logger.set({
+    msg: "Jod",
+  });
   logger.set({
     name: "Yash",
     role: "Fullstack Engineer",
@@ -34,36 +53,27 @@ app.get("/", async (req: Request, res: Response) => {
       },
     },
   });
-  run.set("end");
 
-  logger.set({
-    name: "John summit",
-    role: "Producer",
-    address: {
-      country: "New York",
-    },
-  });
-  console.log("end2");
+  // objects form.
 
-  logger.warn("Warning log");
+  // logger.set({
+  //   msg: "api request"
+  // })
+  // logger.set({
+  //   msg: "api request"
+  // })
+  // logger.set({
+  //   msg: "api request"
+  // })
+  // logger.set({
+  //   msg: "api request"
+  // })
 
-  logger.set("fetching users");
-
-  setTimeout(() => {
-    run.set("timeout res.");
-  }, 4000);
-  // throw new TinyLogError({
-  //   message: "Payment Failed",
-  //   status: 503,
-  //   fix: "retry the same method with different pay id",
-  //   why: "because you used development id",
-  // });
-
-  run.print();
   return res.json("working");
 });
 
 // app.use(errorMiddleware);
 app.listen(8000, () => {
-  run.set("Server started successfully");
+  console.log("serverstarted");
+  // run.set("Server started successfully");
 });

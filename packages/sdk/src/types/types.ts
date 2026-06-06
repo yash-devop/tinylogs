@@ -10,10 +10,13 @@ export type TinylogsType = {
 };
 
 export type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-export type LevelsType = {
+
+export type Entry = {
   level: LogType;
   message: LogParameter;
-}[];
+  count?: number;
+};
+export type LevelsType = Entry[];
 export type Store = {
   requestId: string;
   method?: Method;
@@ -23,6 +26,8 @@ export type Store = {
   errors?: TinyLogErrorOptions;
   level: LogType;
   logs: LevelsType;
+  plugins: Plugin[];
+  formatter: Formatter;
 };
 
 export type NormalizeInputMessage = {
@@ -38,3 +43,29 @@ export type TinyLogErrorOptions = {
   link?: string;
   stack?: string;
 };
+
+export type Plugin = {
+  name: string;
+  transform?: (entry: LogParameter) => void;
+  transformLogs?: (store: Store) => Store;
+};
+
+export type Formatter = (store: Store) => string;
+
+export type TinylogsOptions = {
+  plugins?: Plugin[];
+  formatter?: Formatter;
+};
+
+export type Hooks = {
+  onLevelChange: (newLevel: LogType) => void;
+};
+
+export interface BaseLoggerType {
+  logs: LevelsType;
+  plugins?: Plugin[];
+}
+export interface RequestLoggerType extends BaseLoggerType {
+  hooks?: Hooks;
+  formatter?: Formatter;
+}

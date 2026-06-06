@@ -1,12 +1,22 @@
-import { LevelsType, LogParameter } from "@/types/types";
+import {
+  BaseLoggerType,
+  LevelsType,
+  LogParameter,
+  Plugin,
+} from "@/types/types";
 import { TinyLogError } from "./errors";
 
 export class BaseLogger {
-  constructor(protected logs: LevelsType = []) {
+  protected logs: LevelsType;
+  protected plugins?: Plugin[];
+
+  constructor({ logs = [], plugins }: BaseLoggerType) {
     this.logs = logs;
+    this.plugins = plugins;
   }
 
   set(message: LogParameter) {
+    this.runPluginPipeline(message);
     this.logs.push({ level: "info", message });
   }
 
@@ -31,6 +41,16 @@ export class BaseLogger {
         },
       },
     });
+  }
+
+  runPluginPipeline(entry: LogParameter) {
+    if (!this.plugins) {
+      throw new Error("[Pipeline] Plugins is empty");
+    }
+
+    for (const plugin of this.plugins) {
+      plugin?.transform?.(entry);
+    }
   }
 
   getLogs() {
