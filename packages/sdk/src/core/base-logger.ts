@@ -16,12 +16,14 @@ export class BaseLogger {
   }
 
   set(message: LogParameter) {
-    this.runPluginPipeline(message);
-    this.logs.push({ level: "info", message });
+    const transformedMessage = this.runPluginPipeline(message);
+    this.logs.push({ level: "info", message: transformedMessage });
   }
 
   warn(message: string) {
-    this.logs.push({ level: "warn", message });
+    const transformedMessage = this.runPluginPipeline(message);
+
+    this.logs.push({ level: "warn", message: transformedMessage });
   }
   error(err: Error | string) {
     const isTinyError = err instanceof TinyLogError;
@@ -47,10 +49,15 @@ export class BaseLogger {
     if (!this.plugins) {
       throw new Error("[Pipeline] Plugins is empty");
     }
+    let currentEntry = entry;
 
     for (const plugin of this.plugins) {
-      plugin?.transform?.(entry);
+      if (!plugin.transform) continue;
+
+      currentEntry = plugin.transform(currentEntry);
     }
+
+    return currentEntry;
   }
 
   getLogs() {

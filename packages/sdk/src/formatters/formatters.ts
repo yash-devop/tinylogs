@@ -52,12 +52,26 @@ export const group = (store: Store) => {
 };
 
 export const normal = (store: Store) => {
+  generateMetaData(getContext()?.requestId!);
+
   return store.logs
     .map((log) => {
       if (typeof log.message !== "string") {
         return JSON.stringify(log.message);
       }
-      return `${log.message} (x${log.count})`;
+      const prettyMsg =
+        styleText([LOG_COLORS[log.level]], `[${log.level.toUpperCase()}]`) +
+        " " +
+        log.message +
+        " " +
+        styleText(
+          ["yellow"],
+          log.count && log.count !== 1 ? `(x${String(log.count)})` : "",
+        );
+
+      // return `[${log.level.toUpperCase()}] ${log.message} (x${log.count})`;
+
+      return prettyMsg;
     })
     .join("\n");
 };

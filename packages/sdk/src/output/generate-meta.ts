@@ -22,17 +22,57 @@ export const generateMetaData = (requestId: string) => {
 
   const formattedDate = intl.format(date);
   const responseTime = performance.now() - startTime;
-  console.log(
-    styleText(["gray"], formattedDate),
-    styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
-    method,
-    route,
-    "in",
-    `${Math.round(responseTime)} ms`,
-  );
-  console.log(
-    styleText(["gray"], "├─ ") +
-      styleText(["yellow"], "requestId ") +
-      requestId,
-  );
+
+  switch (store.formatter.name) {
+    case "normal": {
+      console.log(
+        [
+          styleText(["gray"], formattedDate),
+          styleText(["dim"], "·"),
+          styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
+          styleText(["dim"], "·"),
+          method,
+          route,
+          "in",
+          `${Math.round(responseTime)} ms`,
+          styleText(["dim"], "·"),
+          requestId,
+        ].join(" "),
+      );
+      break;
+    }
+    case "group": {
+      console.log(
+        styleText(["gray"], formattedDate),
+        styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
+        method,
+        route,
+        "in",
+        `${Math.round(responseTime)} ms`,
+      );
+      console.log(
+        styleText(["gray"], "├─ ") +
+          styleText(["yellow"], "requestId ") +
+          requestId,
+      );
+      break;
+    }
+
+    default: {
+      console.log(
+        [
+          styleText(["gray"], formattedDate),
+          styleText(["dim"], "·"),
+          styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
+          styleText(["dim"], "·"),
+          method,
+          route,
+          "in",
+          `${Math.round(responseTime)} ms`,
+          styleText(["dim"], "·"),
+          requestId,
+        ].join(" "),
+      );
+    }
+  }
 };

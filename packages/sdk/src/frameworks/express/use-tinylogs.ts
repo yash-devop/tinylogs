@@ -8,10 +8,13 @@ import { TinylogsOptions, TinylogsType } from "@/types/types";
 
 export const useTinyLogs = (options?: TinylogsOptions): TinylogsType => {
   const store = getContext();
-  const { globalConfig: globalPlugins, globalFormatterConfig } =
-    getDefinedConfig();
+  const { globalConfig: globalPlugins } = getDefinedConfig();
 
   store.formatter = options?.formatter || normal;
+
+  const mergedPlugins = mergePlugins(store.plugins, options?.plugins ?? []);
+
+  store.plugins = mergedPlugins;
 
   return new RequestLogger({
     logs: store.logs,
@@ -20,8 +23,6 @@ export const useTinyLogs = (options?: TinylogsOptions): TinylogsType => {
         updateLogLevel(store, newLevel);
       },
     },
-    plugins: options?.plugins
-      ? mergePlugins(globalPlugins ?? [], options.plugins)
-      : store.plugins,
+    plugins: mergedPlugins,
   });
 };

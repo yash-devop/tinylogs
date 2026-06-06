@@ -16,8 +16,6 @@ export const finalizeRequest = (store: Store) => {
   // console.log("FINAL STORE", store);
   const finalStore = runRequestPipeline(store);
 
-  console.log("finalStore", finalStore);
-
   const formatter = store.formatter;
   const output = formatter(finalStore);
 

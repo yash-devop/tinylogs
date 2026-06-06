@@ -46,7 +46,7 @@ export type TinyLogErrorOptions = {
 
 export type Plugin = {
   name: string;
-  transform?: (entry: LogParameter) => void;
+  transform?: (entry: LogParameter) => string;
   transformLogs?: (store: Store) => Store;
 };
 
