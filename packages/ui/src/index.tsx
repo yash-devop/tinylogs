@@ -5,3 +5,4 @@ export * from "./code";
 export * from "./card";
 export * from "./code-block";
 export * from "./tabs";
+export * from "./utils";

@@ -1,10 +1,7 @@
 "use client";
 import { ExpressLogo, NextjsLogo, ViteLogo } from "@tinylogs/ui";
-import { CurrentPageIndicator } from "../current-page-indicator";
 import * as HeadingSection from "../heading-section";
-import * as Seperator from "../heading-seperator/heading-seperator";
 import { MainSection } from "../main-section";
-import { StatusPing } from "../status-ping";
 
 type FrameworkType = {
   id: string | number;
@@ -38,15 +35,6 @@ export const FrameworkSection = () => {
     <div className="flex w-full h-full flex-col gap-2 pb-5 pt-28 pb-12 lg:flex-row">
       <div className="relative w-full h-full flex flex-col gap-y-10">
         <MainSection>
-          <Seperator.Section className="-z-10">
-            <Seperator.Heading>
-              <StatusPing />
-              Package Installation
-            </Seperator.Heading>
-            <Seperator.SubHeading>
-              <CurrentPageIndicator section={2} total={2} />
-            </Seperator.SubHeading>
-          </Seperator.Section>
           <HeadingSection.Section className="">
             <HeadingSection.Heading className="text-xl md:text-3xl tracking-tight font-semibold font-geist-sans text-neutral-700">
               Your Framework. Our Logs

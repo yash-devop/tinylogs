@@ -1,28 +1,29 @@
-import { IconCheck, IconCopy } from "@tabler/icons-react";
-import { useCopyClipboard } from "@tinylogs/ui";
+import { IconCheck, IconClipboard } from "@tabler/icons-react";
+import { cn, useCopyClipboard } from "@tinylogs/ui";
 
 export const CopyButton = ({
   value,
-  getValue,
+  className,
 }: {
-  value?: string;
-  getValue?: () => string;
+  value: string;
+  className?: string;
 }) => {
   const { copyToClipboard, isCopied } = useCopyClipboard();
 
   return (
     <button
-      className="flex items-center justify-center text-neutral-600 cursor-pointer"
-      //   size={"sm"}
-      //   variant={"link"}
-      onClick={() => {
-        if (!value && !getValue) return;
-        const copyString = getValue ? getValue() : value;
-
-        copyToClipboard(copyString);
-      }}
+      onClick={() => copyToClipboard(value)}
+      className={cn(`cursor-pointer`, className)}
+      disabled={isCopied}
     >
-      {isCopied ? <IconCheck size={17} /> : <IconCopy size={17} />}
+      {isCopied ? (
+        <IconCheck size={17} />
+      ) : (
+        <IconClipboard
+          size={17}
+          className="text-neutral-500 hover:text-black"
+        />
+      )}
     </button>
   );
 };

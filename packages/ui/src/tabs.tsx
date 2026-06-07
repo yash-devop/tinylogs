@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { cn } from "../../../apps/web/utils/cn";
+import { cn } from "@tinylogs/ui";
+
 export interface ITabPrimitiveContext {
   openTab: string;
   setOpen: React.Dispatch<React.SetStateAction<string>>;

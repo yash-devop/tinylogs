@@ -1,5 +1,5 @@
 import { FlowType } from "../../types/types";
-import { cn } from "../../utils/cn";
+import { cn } from "@tinylogs/ui";
 
 export const IDENavDots = ({
   type = "new",

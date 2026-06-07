@@ -1,4 +1,4 @@
-import { cn } from "../utils/cn";
+import { cn } from "@tinylogs/ui";
 
 type SectionProps = React.ComponentProps<"div">;
 

@@ -40,3 +40,30 @@ export const SAMPLE_LOGS_DATA = [
   "Image optimization completed",
   "CDN cache purged",
 ];
+
+export const SNIPPETS = {
+  LOGGER_SET: `app.post("/checkout", async (req, res) => {
+  const logger = useTinyLogs({
+    formatter: group,
+    plugins: [xNCompression()],
+  });
+  
+  logger.set("Validating request");
+  
+  const cart = await getCart(req.userId);
+
+  logger.set("Fetching cart & pricing");
+
+  logger.warn("Inventory missing in cache");
+
+  await getInventoryFromDB(cart.items);
+
+  logger.set("Fallback to DB lookup");
+
+  await createOrder(cart);
+
+  logger.set("Order created");
+
+  res.json({ success: true });
+});`,
+};

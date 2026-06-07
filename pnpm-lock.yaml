@@ -199,6 +199,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: 4.2.4
         version: 4.2.4
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       motion:
         specifier: ^12.38.0
         version: 12.38.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -214,6 +217,9 @@ importers:
       tailwindcss:
         specifier: 4.2.4
         version: 4.2.4
+      tw-merge:
+        specifier: 0.0.1-alpha.3
+        version: 0.0.1-alpha.3
     devDependencies:
       '@tinylogs/eslint-config':
         specifier: workspace:*

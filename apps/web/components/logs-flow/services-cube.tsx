@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@tinylogs/ui";
 
 export const ServiceCube = ({
   name,

@@ -1,11 +1,7 @@
 "use client";
-import { AnimatePresence } from "motion/react";
-import { useAnimationInterval } from "../../hooks/useAnimationInterval";
-import { cn } from "../../utils/cn";
-import * as CodeBlock from "../code-block";
-import { motion } from "motion/react";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import React from "react";
+import { useAnimationInterval } from "../../hooks/useAnimationInterval";
 
 type ContextExampleStatus = {
   id: number | string;
@@ -170,7 +166,7 @@ export const SetContextSection = () => {
 
   return (
     <div className="flex w-full h-full flex-col gap-2 px-2 pb-5 lg:flex-row">
-      <CodeBlock.Root className="min-w-0 flex-1">
+      {/* <CodeBlock.Root className="min-w-0 flex-1">
         <CodeBlock.Header>
           <CodeBlock.Dots />
           <CodeBlock.Filename>checkout.payment.ts</CodeBlock.Filename>
@@ -311,7 +307,7 @@ export const SetContextSection = () => {
             </AnimatePresence>
           </CodeBlock.Pre>
         </CodeBlock.Body>
-      </CodeBlock.Root>
+      </CodeBlock.Root> */}
     </div>
   );
 };
