@@ -25,6 +25,7 @@ export const generateMetaData = (requestId: string) => {
 
   switch (store.formatter.name) {
     case "normal": {
+      console.log("\n");
       console.log(
         [
           styleText(["gray"], formattedDate),
@@ -42,6 +43,8 @@ export const generateMetaData = (requestId: string) => {
       break;
     }
     case "group": {
+      console.log("");
+
       console.log(
         styleText(["gray"], formattedDate),
         styleText([LOG_COLORS[level]], `[${level.toUpperCase()}]`),
@@ -50,11 +53,14 @@ export const generateMetaData = (requestId: string) => {
         "in",
         `${Math.round(responseTime)} ms`,
       );
+      console.log("");
+
       console.log(
         styleText(["gray"], "├─ ") +
           styleText(["yellow"], "requestId ") +
           requestId,
       );
+
       break;
     }
 
