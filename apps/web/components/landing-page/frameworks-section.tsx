@@ -1,5 +1,5 @@
 "use client";
-import { ExpressLogo, NextjsLogo, ViteLogo } from "@tinylogs/ui/logos";
+import { ExpressLogo, NextjsLogo, ViteLogo } from "@tinylogs/ui";
 import { CurrentPageIndicator } from "../current-page-indicator";
 import * as HeadingSection from "../heading-section";
 import * as Seperator from "../heading-seperator/heading-seperator";

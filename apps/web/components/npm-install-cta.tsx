@@ -1,8 +1,7 @@
 "use client";
 import { IconCheck } from "@tabler/icons-react";
-import { useCopyClipboard } from "../hooks/useCopyClipboard";
-import { AnimatePresence } from "motion/react";
-import { motion } from "motion/react";
+import { useCopyClipboard } from "@tinylogs/ui";
+import { AnimatePresence, motion } from "motion/react";
 export const NpmInstallCTA = ({ packageName }: { packageName: string }) => {
   const { copyToClipboard, isCopied } = useCopyClipboard();
   return (

@@ -165,9 +165,9 @@ export const SetContextSection = () => {
   const { renderActiveElement, currentActive, setCurrentActive } =
     useAnimationInterval<ContextExampleStatus>({
       data: iterableArray,
+      interval: 5000,
     });
 
-  const JSX = renderActiveElement?.jsx;
   return (
     <div className="flex w-full h-full flex-col gap-2 px-2 pb-5 lg:flex-row">
       <CodeBlock.Root className="min-w-0 flex-1">

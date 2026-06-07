@@ -1,20 +1,48 @@
+"use client";
 import { IconBrandGithub } from "@tabler/icons-react";
+import { CodeBlock } from "@tinylogs/ui";
+import Link from "next/link";
+import { CurrentPageIndicator } from "../components/current-page-indicator";
 import { Header } from "../components/header";
 import * as HeadingSection from "../components/heading-section";
 import * as Seperator from "../components/heading-seperator/heading-seperator";
-import { SetContextSection } from "../components/landing-page/set-context-section";
+import { FrameworkSection } from "../components/landing-page/frameworks-section";
 import { LogsFlowWorkArea } from "../components/logs-flow/LogsFlow";
 import { MainSection } from "../components/main-section";
-import { StatusPing } from "../components/status-ping";
-import { FrameworkSection } from "../components/landing-page/frameworks-section";
 import { NpmInstallCTA } from "../components/npm-install-cta";
-import { CurrentPageIndicator } from "../components/current-page-indicator";
-import Link from "next/link";
+import { StatusPing } from "../components/status-ping";
+
 export default function Home() {
+  const snippet = `app.post("/checkout", async (req, res) => {
+  const logger = useTinyLogs({
+    formatter: group,
+    plugins: [xNCompression()],
+  });
+
+  logger.set("Validating request");
+  await sleep(50);
+
+  logger.set("Verifying user session");
+  await sleep(80);
+
+  logger.set("Fetching cart & pricing");
+  await sleep(100);
+
+  logger.warn("Inventory missing in cache");
+  await sleep(60);
+
+  logger.set("Fallback to DB lookup");
+  await sleep(120);
+
+  logger.set("Order created");
+  logger.set("Sending confirmation email");
+
+  res.json({ success: true });
+});`;
   return (
     <section className="relative min-h-screen w-full [--pattern:var(--color-neutral-300)] overflow-hidden">
       <div className="max-w-7xl relative w-full min-h-screen mx-auto border-x border-neutral-300">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_10%_at_50%_0%,#000_70%,transparent_110%)] md:[mask-image:radial-gradient(ellipse_80%_35%_at_50%_0%,#000_70%,transparent_110%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_10%_at_50%_0%,#000_70%,transparent_110%)] md:[mask-image:radial-gradient(ellipse_80%_14%_at_50%_0%,#000_70%,transparent_110%)]" />
 
         <Header />
 
@@ -71,8 +99,9 @@ export default function Home() {
                   automatically.
                 </HeadingSection.Description>
               </HeadingSection.Section>
+              <CodeBlock code={snippet} />
             </MainSection>
-            <SetContextSection />
+            {/* <SetContextSection /> */}
             <FrameworkSection />
           </div>
         </div>

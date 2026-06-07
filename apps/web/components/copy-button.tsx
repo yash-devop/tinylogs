@@ -1,5 +1,6 @@
 import { IconCheck, IconCopy } from "@tabler/icons-react";
-import { useCopyClipboard } from "../hooks/useCopyClipboard";
+import { useCopyClipboard } from "@tinylogs/ui";
+
 export const CopyButton = ({
   value,
   getValue,
