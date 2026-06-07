@@ -5,6 +5,9 @@ import { LOG_COLORS } from "@/constants/log-style";
 import { styleText } from "node:util";
 import { generateMetaData } from "./generate-meta";
 
+const WARN_ICON = "⚠";
+const ERROR_ICON = "✗";
+
 export const printRequestLogs = (store: Store) => {
   generateMetaData(getContext()?.requestId!);
 
